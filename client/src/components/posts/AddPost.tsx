@@ -25,6 +25,7 @@ const AddPostButton = styled.button`
 
 `
 const PostInput = styled.input`
+color:${({theme})=> theme.text.primary};
 background: transparent;
     width:40%;
     border: 0;

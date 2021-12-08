@@ -30,6 +30,7 @@ const AddCommentButton = styled.button`
 `
 const CommentInput = styled.input`
     background: transparent;
+    color:${({theme})=> theme.text.primary};
     border:0;
     border-left: 1px solid black;
     outline: none;
