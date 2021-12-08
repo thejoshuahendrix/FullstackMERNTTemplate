@@ -19,8 +19,7 @@ export default class CommentController extends BaseController {
             }
             const comment: CommentI = data
             const c: CommentI = {
-                title: comment.title,
-                description: comment.description,
+                content: comment.content,
                 postId: postId
             }
             const dbData = await Comment.create(c)

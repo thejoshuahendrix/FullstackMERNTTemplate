@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { fetchPosts } from '../../actions/postActions'
@@ -9,9 +9,13 @@ import PostCard from './PostCard'
 
 const PostListWrapper = styled.div`
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     box-shadow: 10px 10px 10px rgba(0,0,0,.1);
-    width: fit-content;
+    width: 100%;
     padding: 20px;
+    min-height: 60vh;
 
 `
 
@@ -19,10 +23,13 @@ const PostList = () => {
     const state = store.getState()
     const dispatch = useDispatch();
     const posts = useSelector(fetchPosts)
+    useLayoutEffect(() => {
+        fetchPosts()(dispatch)
+    }, [])
     return (
         <PostListWrapper>
             <AddPost />
-            {state.post.posts.map((post: Post) => <PostCard id={post._id || ""} title={post.title} description={post.description} comments={post.comments || []} createdAt={post.createdAt || ""} done={post.done || false} />)}
+            {state.post.posts.sort((x:Post, y:Post) => new Date(y.createdAt||"").getTime() - +new Date(x.createdAt||"").getTime()).map((post: Post) => <PostCard id={post._id || ""} content={post.content} comments={post.comments || []} createdAt={post.createdAt || ""} />)}
         </PostListWrapper>
     )
 }

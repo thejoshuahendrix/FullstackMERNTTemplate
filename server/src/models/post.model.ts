@@ -1,22 +1,14 @@
 import * as mongoose from "mongoose";
 
 export interface PostI {
-    title: string;
-    description?: string;
+    content: string;
     done: boolean;
     comments: [];
 }
 
 const PostSchema = new mongoose.Schema({
-    title: {
+    content: {
         type: String
-    },
-    description: {
-        type: String,
-    },
-    done: {
-        type: Boolean,
-        default: false
     },
     comments: [
         {

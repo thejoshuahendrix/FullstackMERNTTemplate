@@ -28,6 +28,7 @@ export default class BaseController{
         try {
             const dbData = await this.model.find().populate("comments");
             res.send(dbData);
+            log.info('GET request received and response sent')
         } catch (error) {
             res.status(400).send(`Error in GET ${this.modelName}`);
         }

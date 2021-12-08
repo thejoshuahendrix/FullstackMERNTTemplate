@@ -5,31 +5,39 @@ import styled from "styled-components"
 import { deletePost } from "../../actions/postActions"
 import { useDispatch } from "react-redux"
 import moment from "moment"
+import { Delete } from "react-feather"
 
 interface Props {
-    title: string;
-    description: string;
-    done: boolean;
+    content: string;
     comments: Comment[];
     createdAt: string;
     id: string;
 }
 const CommentCardsWrapper = styled.div`
-    width: 100%;
+    width: 90%;
     gap: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
 `
-const PostCardWrapper = styled.div<{ done: boolean }>`
+const AddCommentWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: 40px;
+`
+const PostCardWrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-  min-height: 300x;
-  max-width: 900px;
+  min-height: 300px;
+  min-width: 600px;
+  max-width: 100%;
   padding: 20px;
   gap:10px;
-  ${({ done }) => done ? "border-left: 2px solid green" : ""};
-  border: 1px dotted rgba(0,0,0,.1);
+  color: ${({theme})=> theme.text.primary};
+  border: 1px dotted rgba(0,0,0,.5);
+  border-radius: ${({theme})=> theme.card.borderRadius};
 `
 
 const DateWrapper = styled.div`
@@ -46,22 +54,28 @@ const DeleteButtonWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
     width: 100%;
+
 `
-const PostCard = ({ title, description, done, comments, createdAt, id }: Props) => {
+const DeletePostButton = styled.button`
+    background: transparent;
+    outline: 0;
+    border: 0;
+    color: #6d1919;
+`
+const PostCard = ({ content, comments, createdAt, id }: Props) => {
     const dispatch = useDispatch();
 
     return (
-        <PostCardWrapper done={done}>
-            <DeleteButtonWrapper><button onClick={() => deletePost(id)(dispatch)}>X</button></DeleteButtonWrapper>
-            <h1>{title}</h1>
-            <DescriptionWrapper>{description}</DescriptionWrapper>
+        <PostCardWrapper>
+            <DeleteButtonWrapper><DeletePostButton onClick={() => deletePost(id)(dispatch)}><Delete/></DeletePostButton></DeleteButtonWrapper>
+            <DescriptionWrapper>{content}</DescriptionWrapper>
             <DateWrapper>{moment(createdAt).fromNow()}</DateWrapper>
             <CommentCardsWrapper>
-                {comments.map(comment => <CommentCard id={comment._id || ''} title={comment.title} description={comment.description} updatedAt={comment.updatedAt || ""} />)}
+                {comments.map(comment => <CommentCard id={comment._id || ''} content={comment.content} updatedAt={comment.updatedAt || ""} />)}
             </CommentCardsWrapper>
-
+            <AddCommentWrapper>
             <AddComment id={id} />
-
+            </AddCommentWrapper>
         </PostCardWrapper>
     )
 }

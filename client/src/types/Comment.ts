@@ -1,6 +1,5 @@
 export type Comment = {
     _id?: string;
-    title: string;
-    description: string;
+    content: string;
     updatedAt?: string;
 }

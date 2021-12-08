@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CheckSquare } from 'react-feather'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { addComment } from '../../actions/commentActions'
@@ -9,9 +10,11 @@ interface Props {
 
 const CommentInputWrapper = styled.form`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     background: ${({theme})=> theme.text.ternary};
     width: 100%;
+    min-width: 400px;
     gap: 20px;
     color: ${({theme})=> theme.text.secondary};
     border: 1px dotted rgba(0,0,0,.2);
@@ -19,23 +22,32 @@ const CommentInputWrapper = styled.form`
     padding:20px;
 `
 const AddCommentButton = styled.button`
-    border-radius: ${({theme})=> theme.card.borderRadius};
-    background: ${({theme})=> theme.button.background};
-    color: ${({theme})=> theme.button.text};
+    background: transparent;
+    color: ${({theme})=> theme.text.secondary};
+    border: 0;
+    outline: 0;
+
+`
+const CommentInput = styled.input`
+    background: transparent;
+    border:0;
+    border-left: 1px solid black;
+    outline: none;
+    &::active{
+        outline: none;
+    }
 `
 
 const AddComment = ({ id }: Props) => {
     const dispatch = useDispatch();
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
+    const [content, setContent] = useState('')
 
-    let comment = { title, description, postId: id }
+    let comment = { content, postId: id }
     return (
         <CommentInputWrapper>
-                <label>Add Comment:</label>
-                <input placeholder="Title" type='text' name='title' value={title} onChange={(e) => setTitle(e.target.value)} />
-                <textarea placeholder="Description"  name='description' value={description} onChange={(e) => setDescription(e.target.value)} />
-                <AddCommentButton onClick={(e) => { e.preventDefault(); addComment(comment)(dispatch);setDescription('');setTitle('') }}>Add Comment </AddCommentButton>
+
+                <CommentInput placeholder="Add a comment..." type='text' name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+                <AddCommentButton onClick={(e) => { e.preventDefault(); addComment(comment)(dispatch);setContent('') }}><CheckSquare/></AddCommentButton>
         </CommentInputWrapper>
     )
 }
