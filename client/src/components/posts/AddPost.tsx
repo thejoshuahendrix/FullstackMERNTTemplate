@@ -49,8 +49,8 @@ const AddPost = () => {
     return (
         <>
             <AddPostForm id="Post-form">
-                <PostInput placeholder="Whats on your mind?.. "type='text' name='content' value={content} onChange={(e) => setContent(e.target.value)} />
-                <AddPostButton onClick={(e) => { e.preventDefault(); addPost(post)(dispatch); setContent('') }}><CheckCircle/></AddPostButton>
+                <PostInput id="addpostInput" placeholder="Whats on your mind?.. "type='text' name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+                <AddPostButton id="addpostButton" onClick={(e) => { e.preventDefault(); addPost(post)(dispatch); setContent('') }}><CheckCircle/></AddPostButton>
 
             </AddPostForm>
         </>

@@ -8,7 +8,7 @@ const Menu = ({ open, setOpen }: any) => {
             <Link style={{ textDecoration: "none" }} id="burgerhomelink" to='/'>Home</Link>
             <Link style={{ textDecoration: "none" }} id="burgercontactlink" to='/contact'>Contact</Link>
             <Link style={{ textDecoration: "none" }} id="burgeraboutlink" to='/about'>About</Link>    
-            <Link style={{ textDecoration: "none" }} id="burgerpostlink" to='/posts'>Posts</Link>    
+            <Link style={{ textDecoration: "none" }} id="burgerpostslink" to='/posts'>Posts</Link>    
         </StyledMenu>
     )
 }

@@ -37,6 +37,13 @@ describe("should route to contact page", () => {
     cy.get("#contact").should("exist");
   });
 });
+describe("should route to posts page", () => {
+  it("routes correctly", () => {
+    cy.visit("/");
+    cy.get("#postslink").click();
+    cy.get("#addpostInput").should("exist");
+  });
+});
 describe("should render burger when viewport shrinks", () => {
   it("renders correctly", () => {
     cy.visit("/");
@@ -79,6 +86,15 @@ describe("should route to home through burger", () => {
     cy.get("#main").should("exist");
   });
 });
+describe("should route to posts through burger", () => {
+  it("renders correctly", () => {
+    cy.visit("/");
+    cy.viewport(550, 750);
+    cy.get("#burger").click();
+    cy.get("#burgerpostslink").click();
+    cy.get("#addpostInput").should("exist");
+  });
+});
 describe("should route to privacy page", () => {
   it("renders correctly", () => {
     cy.visit("/");
@@ -102,5 +118,13 @@ describe("should give email sent if contact form has input", () => {
     cy.get("#messageInput").type('Josh');
     cy.get("#submitButton").click();
     cy.contains("Email Sent!").should("exist");
+  });
+});
+describe("should show post after a submit", () => {
+  it("render post content", () => {
+    cy.visit("/posts");
+    cy.get("#addpostInput").type('Josh');
+    cy.get("#addpostButton").click();
+    cy.contains("Josh").should("exist");
   });
 });

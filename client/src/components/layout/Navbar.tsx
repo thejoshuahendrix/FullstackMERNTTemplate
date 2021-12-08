@@ -135,7 +135,7 @@ const Navbar = ({ themeChanger }: Props) => {
                     {isDesktopOrLaptop && <>
                         <Link id="contactlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/contact'>Contact</Link>
                         <Link id="aboutlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/about'>About</Link>
-                        <Link id="postlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/posts'>Posts</Link>
+                        <Link id="postslink" style={{ textDecoration: "none", fontSize: "20px" }} to='/posts'>Posts</Link>
 
                     </>
                     }{isTabletOrMobile && <>
