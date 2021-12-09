@@ -3,23 +3,31 @@ import { CheckCircle } from 'react-feather'
 import styled, { ThemeConsumer } from 'styled-components'
 
 const LoginForm = styled.form`
-    width:100%;
+   width:100%;
     height:100%;
     min-height:60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top:40px;
+    gap: 20px;
+    color:${({theme})=> theme.text.primary};
     background: ${({ theme }) => theme.background.secondary};
 `
 
 const LoginInput = styled.input`
-    width: 80%;
+    width: 30%;
     height: 50px;
     background: transparent;
-    border: .5px solid black;
+    color:${({theme})=> theme.text.primary};
+    border-left: 1px solid black;
     outline: none;
 `
 const LoginButton = styled.button`
     outline: none;
     background: transparent;
     color: ${({ theme }) => theme.text.secondary};
+    border: 0;
 `
 
 
@@ -51,9 +59,13 @@ const Login = () => {
 
     return (
         <LoginForm>
-            <LoginInput value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter name..." />
-            <LoginInput type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password..." />
-            <LoginButton onClick={(e) => handleSubmit(e)}><CheckCircle /></LoginButton>
+            Login
+            <LoginInput id="nameInput" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter name..." />
+            <LoginInput id="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password..." />
+            <div className='tooltip'>
+            <LoginButton id="loginButton" onClick={(e) => handleSubmit(e)}><CheckCircle /></LoginButton>
+            <span className="tooltiptext" onClick={(e) => handleSubmit(e)}>Login</span>
+            </div>
             {error}
         </LoginForm>
     )

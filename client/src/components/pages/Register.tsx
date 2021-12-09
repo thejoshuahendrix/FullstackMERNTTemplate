@@ -6,19 +6,27 @@ const RegisterForm = styled.form`
     width:100%;
     height:100%;
     min-height:60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top:40px;
+    gap: 20px;
+    color:${({theme})=> theme.text.primary};
     background: ${({ theme }) => theme.background.secondary};
 `
 
 const RegisterInput = styled.input`
-    width: 80%;
+    width: 30%;
     height: 50px;
     background: transparent;
-    border: .5px solid black;
+    color:${({theme})=> theme.text.primary};
+    border-left: .5px solid black;
     outline: none;
 `
 
 const RegisterButton = styled.button`
     outline: none;
+    border: 0;
     background: transparent;
     color: ${({ theme }) => theme.text.secondary};
 `
@@ -47,10 +55,14 @@ const Register = () => {
 
     return (
         <RegisterForm>
+            Register
             <RegisterInput value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter name..." />
             <RegisterInput type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password..." />
             <RegisterInput value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email.." />
+            <div className='tooltip'>
             <RegisterButton onClick={(e) => handleSubmit(e)}><CheckCircle /></RegisterButton>
+            <span className="tooltiptext" onClick={(e) => handleSubmit(e)}>Register</span>
+            </div>
             {error}
         </RegisterForm>
     )

@@ -19,7 +19,11 @@ const PostListWrapper = styled.div`
 
 `
 
-const PostList = () => {
+interface Props {
+    user:string;
+}
+
+const PostList = ({user}:Props) => {
     const state = store.getState()
     const dispatch = useDispatch();
     const posts = useSelector(fetchPosts)
@@ -28,8 +32,9 @@ const PostList = () => {
     }, [])
     return (
         <PostListWrapper>
-            <AddPost />
-            {state.post.posts.sort((x:Post, y:Post) => new Date(y.createdAt||"").getTime() - +new Date(x.createdAt||"").getTime()).map((post: Post) => <PostCard id={post._id || ""} content={post.content} comments={post.comments || []} createdAt={post.createdAt || ""} />)}
+            <AddPost user={user}/>
+            
+            {state.post.posts.sort((x:Post, y:Post) => new Date(y.createdAt||"").getTime() - +new Date(x.createdAt||"").getTime()).map((post: Post) => <PostCard user={user} id={post._id || ""} content={post.content} author={post.author} comments={post.comments || []} createdAt={post.createdAt || ""} />)}
         </PostListWrapper>
     )
 }

@@ -20,6 +20,8 @@ export default class CommentController extends BaseController {
             const comment: CommentI = data
             const c: CommentI = {
                 content: comment.content,
+                author: comment.user,
+                user: comment.user,
                 postId: postId
             }
             const dbData = await Comment.create(c)
@@ -37,12 +39,12 @@ export default class CommentController extends BaseController {
     }
 
     delete = async (req: Request, res: Response) => {
-        try{
+        try {
             const { id } = req.params;
-            const dbData = await Comment.deleteOne({_id: id});
+            const dbData = await Comment.deleteOne({ _id: id });
             res.send(dbData);
 
-        } catch (error){
+        } catch (error) {
             res.status(400).send(`Error in DELETE ${Comment.modelName}`);
         }
     }

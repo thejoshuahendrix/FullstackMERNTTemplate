@@ -38,7 +38,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/posts" element={<PostPage isLoggedIn={isLoggedIn} />} />
+            <Route path="/posts" element={<PostPage user={user} isLoggedIn={isLoggedIn} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>

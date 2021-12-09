@@ -6,9 +6,12 @@ import { deletePost } from "../../actions/postActions"
 import { useDispatch } from "react-redux"
 import moment from "moment"
 import { Delete } from "react-feather"
+import { useState } from "react"
 
 interface Props {
     content: string;
+    author: string;
+    user: string;
     comments: Comment[];
     createdAt: string;
     id: string;
@@ -35,9 +38,9 @@ align-items: center;
   max-width: 100%;
   padding: 20px;
   gap:10px;
-  color: ${({theme})=> theme.text.primary};
+  color: ${({ theme }) => theme.text.primary};
   border: 1px dotted rgba(0,0,0,.5);
-  border-radius: ${({theme})=> theme.card.borderRadius};
+  border-radius: ${({ theme }) => theme.card.borderRadius};
 `
 
 const DateWrapper = styled.div`
@@ -62,19 +65,33 @@ const DeletePostButton = styled.button`
     border: 0;
     color: #6d1919;
 `
-const PostCard = ({ content, comments, createdAt, id }: Props) => {
+const PostCard = ({ user, author, content, comments, createdAt, id }: Props) => {
     const dispatch = useDispatch();
+    const [error, setError] = useState('')
+    const handleDelete = (id: string) => {
+        if (user === author) {
+            deletePost(id)(dispatch)
+        }
+    }
 
     return (
         <PostCardWrapper>
-            <DeleteButtonWrapper><DeletePostButton onClick={() => deletePost(id)(dispatch)}><Delete/></DeletePostButton></DeleteButtonWrapper>
+            {author}
+
+            {user === author && <DeleteButtonWrapper>
+                <div className="tooltip">
+                    <DeletePostButton onClick={() => handleDelete(id)}><Delete /></DeletePostButton>
+                    <span className="tooltiptext" onClick={() => handleDelete(id)}>Delete Post</span>
+                </div>
+            </DeleteButtonWrapper>}
             <DescriptionWrapper>{content}</DescriptionWrapper>
             <DateWrapper>{moment(createdAt).fromNow()}</DateWrapper>
+
             <CommentCardsWrapper>
-                {comments.map(comment => <CommentCard id={comment._id || ''} content={comment.content} updatedAt={comment.updatedAt || ""} />)}
+                {comments.map(comment => <CommentCard id={comment._id || ''} user={user} author={comment.author} content={comment.content} updatedAt={comment.updatedAt || ""} />)}
             </CommentCardsWrapper>
             <AddCommentWrapper>
-            <AddComment id={id} />
+                <AddComment user={user} author={author} id={id} />
             </AddCommentWrapper>
         </PostCardWrapper>
     )

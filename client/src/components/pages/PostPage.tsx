@@ -2,10 +2,16 @@ import React from 'react'
 import AddPost from '../posts/AddPost'
 import PostList from '../posts/PostList'
 
-const PostPage = ({isLoggedIn}: any) => {
+
+interface Props {
+    isLoggedIn:boolean;
+    user:string;
+}
+
+const PostPage = ({isLoggedIn, user}: Props) => {
     return (
         <div>
-            {isLoggedIn &&<PostList />}
+            {isLoggedIn &&<PostList user={user} />}
         </div>
     )
 }

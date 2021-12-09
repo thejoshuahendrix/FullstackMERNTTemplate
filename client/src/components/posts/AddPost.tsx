@@ -18,14 +18,14 @@ const AddPostForm = styled.form`
 `
 const AddPostButton = styled.button`
     background: transparent;
-    color: ${({theme})=> theme.text.secondary};
+    color: ${({ theme }) => theme.text.secondary};
     border-radius: ${({ theme }) => theme.card.borderRadius};
     outline: 0;
     border: 0;
 
 `
 const PostInput = styled.input`
-color:${({theme})=> theme.text.primary};
+color:${({ theme }) => theme.text.primary};
 background: transparent;
     width:40%;
     border: 0;
@@ -39,19 +39,23 @@ background: transparent;
     }
 `
 
+interface Props {
+    user: string;
+}
 
-
-const AddPost = () => {
+const AddPost = ({ user }: Props) => {
     const dispatch = useDispatch();
     const [content, setContent] = useState('')
-    
-    let post = { content };
+
+    let post = { content, author: user };
     return (
         <>
             <AddPostForm id="Post-form">
-                <PostInput id="addpostInput" placeholder="Whats on your mind?.. "type='text' name='content' value={content} onChange={(e) => setContent(e.target.value)} />
-                <AddPostButton id="addpostButton" onClick={(e) => { e.preventDefault(); addPost(post)(dispatch); setContent('') }}><CheckCircle/></AddPostButton>
-
+                <PostInput id="addpostInput" placeholder="Whats on your mind?.. " type='text' name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+                <div className='tooltip'>
+                    <AddPostButton id="addpostButton" onClick={(e) => { e.preventDefault(); addPost(post)(dispatch); setContent('') }}><CheckCircle /></AddPostButton>
+                    <span className="tooltiptext" onClick={(e) => { e.preventDefault(); addPost(post)(dispatch); setContent('') }}>Add Post</span>
+                </div>
             </AddPostForm>
         </>
     )
