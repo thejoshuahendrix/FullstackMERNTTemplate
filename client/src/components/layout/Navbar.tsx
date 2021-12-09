@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
+import LogoutButton from '../LogoutButton';
 import { ToggleThemeButton } from '../ToggleThemeButton'
 import Burger from './Burger';
 import Menu from './Menu';
@@ -112,10 +113,11 @@ export const GradientWrap = styled.div`
 `
 interface Props {
     themeChanger: () => void;
+    isLoggedIn: boolean;
 
 }
 
-const Navbar = ({ themeChanger }: Props) => {
+const Navbar = ({ themeChanger, isLoggedIn }: Props) => {
     const [open, setOpen] = useState(false);
     const [toggle, setToggle] = useState(true);
     const theme = useTheme();
@@ -135,12 +137,14 @@ const Navbar = ({ themeChanger }: Props) => {
                     {isDesktopOrLaptop && <>
                         <Link id="contactlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/contact'>Contact</Link>
                         <Link id="aboutlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/about'>About</Link>
-                        <Link id="postslink" style={{ textDecoration: "none", fontSize: "20px" }} to='/posts'>Posts</Link>
-
+                        {isLoggedIn &&<Link id="postslink" style={{ textDecoration: "none", fontSize: "20px" }} to='/posts'>Posts</Link>}
+                        {isLoggedIn &&<LogoutButton id="navlogoutbutton" />}
+                        {!isLoggedIn && <Link id="loginlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/login'>Login</Link>}
+                        {!isLoggedIn && <Link id="registerlink" style={{ textDecoration: "none", fontSize: "20px" }} to='/register'>Register</Link>}
                     </>
                     }{isTabletOrMobile && <>
                         <Burger open={open} setOpen={setOpen} />
-                        <Menu open={open} setOpen={setOpen} />
+                        <Menu isLoggedIn={isLoggedIn} open={open} setOpen={setOpen} />
                     </>}
                 </LinkWrapper>
             </NavWrapper>

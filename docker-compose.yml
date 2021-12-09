@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  web:
+    image: thejoshhendrix/fs-react #You can do build: ./client
+    ports:
+      - "3000:3000"
+  server:
+      image: thejoshhendrix/fs-express #You can do build: ./client
+      ports:
+        - "5000:5000"
+      env_file:
+        - "./server/.env"

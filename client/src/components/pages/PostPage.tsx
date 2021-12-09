@@ -2,10 +2,10 @@ import React from 'react'
 import AddPost from '../posts/AddPost'
 import PostList from '../posts/PostList'
 
-const PostPage = () => {
+const PostPage = ({isLoggedIn}: any) => {
     return (
         <div>
-            <PostList />
+            {isLoggedIn &&<PostList />}
         </div>
     )
 }

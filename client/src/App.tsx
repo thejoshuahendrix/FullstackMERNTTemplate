@@ -13,11 +13,14 @@ import Privacy from "./components/pages/Privacy";
 import PostPage from "./components/pages/PostPage";
 import { useSelector } from "react-redux";
 import { fetchPosts } from "./actions/postActions";
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
+import jwt from 'jsonwebtoken';
 
-
-
+let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
 function App() {
-  
+  const [user] = useState(decoded ? decoded.username : "");
+  const [isLoggedIn] = useState(decoded ? true : false);
   const [theme, setTheme] = useState<DefaultTheme>(DarkTheme);
   const changeTheme = () => {
     setTheme(theme === DarkTheme ? LightTheme : DarkTheme);
@@ -28,14 +31,16 @@ function App() {
     <ThemeProvider theme={theme}>
       <AppWrapper>
         <Router>
-          <Navbar themeChanger={changeTheme} />
+          <Navbar isLoggedIn={isLoggedIn} themeChanger={changeTheme} />
           <Hero />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/posts" element={<PostPage />} />
+            <Route path="/posts" element={<PostPage isLoggedIn={isLoggedIn} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
 
           <Footer />
